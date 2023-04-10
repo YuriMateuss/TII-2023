@@ -8,7 +8,7 @@ using WebAppContinuação.Models;
 namespace WebAppContinuação.Controllers
 {
     public class CategoriasController : Controller
-    { 
+    {
         private static IList<Categoria> categorias = new List<Categoria>()
 {
 new Categoria() { CategoriaId = 1, Nome = "Notebooks"},
@@ -21,6 +21,21 @@ new Categoria() { CategoriaId = 5, Nome = "Desktops"}
         public ActionResult Index()
         {
             return View(categorias);
+        }
+
+        // GET: Categorias
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Categoria categoria)
+        {
+            categorias.Add(categoria);
+            categoria.CategoriaId = categorias.Select(m => m.CategoriaId).Max() + 1;
+            return RedirectToAction("Index");
         }
     }
 }
