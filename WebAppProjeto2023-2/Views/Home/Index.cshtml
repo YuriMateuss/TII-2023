@@ -1,0 +1,57 @@
+﻿@model WebAppProjeto2023_2.Models.Home
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Loja Virtual";
+}
+
+<div>
+    <h2>Fabricantes</h2>
+    <table class="table table-striped">
+        <tr>
+            <th scope="col">Nome dos Fabricantes</th>
+        </tr>
+        @foreach (var item in Model.fabricantes)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Nome, "Index", "Home", new { FabricanteId = item.FabricanteId }, null)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div>
+    <h2>Categorias</h2>
+    <table class="table table-striped">
+        <tr class="table-primary">
+            <th scope="col">Nome das Categorias</th>
+        </tr>
+        @foreach (var item in Model.categorias)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Nome, "Index", "Home", new { CategoriaId = item.CategoriaId }, null)
+                </td>
+
+            </tr>
+        }
+    </table>
+</div>
+
+@if ((Model.produtos != null) && (Model.filtro == "Fabricante"))
+{
+    <div class="alert alert-success" role="alert">
+        <p>Produtos por Fabricante</p>
+        @Html.Partial("~/Views/Produtos/_PorFabricante.cshtml", Model.produtos.ToList())
+    </div>
+}
+
+@if ((Model.produtos != null) && (Model.filtro == "Categoria"))
+{
+    <div class="alert alert-success" role="alert">
+        <p>Produtos por Categoria</p>
+        @Html.Partial("~/Views/Produtos/_PorCategoria.cshtml", Model.produtos.ToList())
+    </div>
+}
